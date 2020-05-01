@@ -26,19 +26,20 @@ public class JPAConfiguration {
 		factoryBean.setJpaVendorAdapter(vendorAdapter);
 		
 		DriverManagerDataSource dataSource = new DriverManagerDataSource(); //Propriedades da conexao
-		dataSource.setUsername("root");
+	     dataSource.setDriverClassName("org.postgresql.Driver");
+	 	dataSource.setUrl("jdbc:postgresql://localhost:5432/casadocodigo");
+		dataSource.setUsername("postgres");
 		dataSource.setPassword("michele0701");
-		dataSource.setUrl("jdbc:mysql://localhost/casadocodigo?useTimezone=true&serverTimezone=UTC");
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+	
 		factoryBean.setDataSource(dataSource);
 		
 		Properties prop = new Properties(); //Propriedades do hibernate que iremos utilizar
-		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		prop.setProperty("hibernate.show_sql", "true");
 		prop.setProperty("hibernate.hbm2ddl.auto", "update");
 		factoryBean.setJpaProperties(prop);
 		
-		factoryBean.setPackagesToScan("br.com.casadocodigo.loja.models");
+		factoryBean.setPackagesToScan("br.com.casadocodigo.loja.model");
 		
 		return factoryBean;
 	}
