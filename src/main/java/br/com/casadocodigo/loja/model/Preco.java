@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.Embeddable;
 
-@Embeddable //significa que nosso preco está relacionado a nosso produto, tipo, incorporado
+@Embeddable
 public class Preco {
 
 	public BigDecimal getValor() {
