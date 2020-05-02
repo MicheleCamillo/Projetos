@@ -8,14 +8,17 @@ import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.datetime.DateFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import br.com.casadocodigo.loja.controllers.HomeController;
 import br.com.casadocodigo.loja.dao.ProdutoDAO;
+import br.com.casadocodigo.loja.infra.FileSaver;
 
 @EnableWebMvc // Habilitar o uso do spring mvc
-@ComponentScan(basePackageClasses = { HomeController.class, ProdutoDAO.class }) // Queremos que o spring saiba qual é a classe do
+@ComponentScan(basePackageClasses = { HomeController.class, ProdutoDAO.class, FileSaver.class }) // Queremos que o spring saiba qual é a classe do
 																// controller. Queremos que isso seja dinamico -
 																// autocomplete
 public class AppWebConfiguration {//Classe específica de configuracao para nossa parte web
@@ -48,6 +51,11 @@ public class AppWebConfiguration {//Classe específica de configuracao para noss
 		registrar.registerFormatters(cs);
 		
 		return cs;
+	}
+	
+	@Bean
+	public MultipartResolver multipartResolver() {
+		return new StandardServletMultipartResolver();
 	}
 
 }
