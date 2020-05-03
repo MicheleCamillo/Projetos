@@ -18,9 +18,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import br.com.casadocodigo.loja.controllers.HomeController;
 import br.com.casadocodigo.loja.dao.ProdutoDAO;
 import br.com.casadocodigo.loja.infra.FileSaver;
+import br.com.casadocodigo.loja.model.CarrinhoCompras;
 
 @EnableWebMvc // Habilitar o uso do spring mvc
-@ComponentScan(basePackageClasses = { HomeController.class, ProdutoDAO.class, FileSaver.class }) // Queremos que o spring saiba qual é a classe do
+@ComponentScan(basePackageClasses = { HomeController.class, ProdutoDAO.class, FileSaver.class, CarrinhoCompras.class }) // Queremos que o spring saiba qual é a classe do
 																// controller. Queremos que isso seja dinamico -
 																// autocomplete
 public class AppWebConfiguration extends WebMvcConfigurerAdapter {//Classe específica de configuracao para nossa parte web
@@ -30,6 +31,9 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter {//Classe espec
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp");
+		//Com essa configuração, todos os beans ficam disponiveis na JSP
+		resolver.setExposedContextBeanNames("carrinhoCompras");
+		
 		return resolver;
 	}
 	
