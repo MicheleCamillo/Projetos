@@ -10,7 +10,9 @@ import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import br.com.casadocodigo.loja.controllers.HomeController;
@@ -21,7 +23,7 @@ import br.com.casadocodigo.loja.infra.FileSaver;
 @ComponentScan(basePackageClasses = { HomeController.class, ProdutoDAO.class, FileSaver.class }) // Queremos que o spring saiba qual é a classe do
 																// controller. Queremos que isso seja dinamico -
 																// autocomplete
-public class AppWebConfiguration {//Classe específica de configuracao para nossa parte web
+public class AppWebConfiguration extends WebMvcConfigurerAdapter {//Classe específica de configuracao para nossa parte web
 
 	@Bean //Diz pro spring que ele vai gerenciar esse metodo
 	public InternalResourceViewResolver internalResourceViewResolver() { // Precisamos falar onde está a nossa view
@@ -58,4 +60,8 @@ public class AppWebConfiguration {//Classe específica de configuracao para noss
 		return new StandardServletMultipartResolver();
 	}
 
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+	    configurer.enable();
+	}
 }
