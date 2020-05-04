@@ -1,5 +1,6 @@
 package br.com.casadocodigo.loja.model;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
@@ -100,6 +101,11 @@ public class Produto {
 	@Override
 	public String toString() {
 		return "Produto [titulo=" + titulo + ", descricao=" + descricao + ", paginas=" + paginas + "]";
+	}
+	public BigDecimal precoPara(TipoPreco tipoPreco) {
+		//eu não entendo muito das expressoes lambda, mas sei que funciona para economizarmos em for etc
+		return precos.stream().filter(preco->preco.getTipo().equals(tipoPreco)).findFirst().get().getValor();
+		
 	}
 
 }
