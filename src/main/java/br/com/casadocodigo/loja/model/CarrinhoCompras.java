@@ -7,12 +7,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 @Component
-@Scope(value = WebApplicationContext.SCOPE_SESSION) // Estamos informando ao spring que podemos ter mais de uma sessao -
-													// uma instancia dessa classe por usuario
+@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode=ScopedProxyMode.TARGET_CLASS) // Estamos informando ao spring que podemos ter mais de uma sessao - uma instancia dessa classe por usuario
+//Proxy Mode Target Class cria um proxy na classe alvo a ligando diretamente com o outro escopo - Resolve as dependendencias e nao precisamos mudar o escopo dos nosso requests, que depende da sua aplicacao
 public class CarrinhoCompras implements Serializable {
 //É interessante usar o implemets serializable toda vez que temos um scope_session, porque o objeto é guardado em arquivo, e quando o usuario vai utilizar novamente a sessão, o arquivo é retornado 
 	private Map<CarrinhoItem, Integer> itens = new LinkedHashMap<CarrinhoItem, Integer>();
@@ -51,5 +52,12 @@ public class CarrinhoCompras implements Serializable {
 			total = total.add(getTotal(item));
 		}
 		return total;
+	}
+
+	public void remover(Integer produtoId, TipoPreco tipoPreco) {
+		Produto produto = new Produto();
+		produto.setId(produtoId);
+		itens.remove(new CarrinhoItem(produto, tipoPreco));
+		
 	}
 }
